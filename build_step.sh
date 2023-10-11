@@ -2,8 +2,6 @@
 
 echo "Build script"
 
-chmod 111
-
-npm build
+npm run build
 
 npm install
