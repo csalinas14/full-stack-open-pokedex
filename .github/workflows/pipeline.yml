@@ -28,8 +28,4 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - name: Wait for Render Deployment
-        uses: bounceapp/render-action@0.6.0
-        with:
-          render-token: ${{ secrets.RENDER_TOKEN }}
-          github-token: ${{ secrets.POKEDEX_TOKEN }}
-          service-id: ${{ secrets.RENDER_SERVICE_ID }}
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
