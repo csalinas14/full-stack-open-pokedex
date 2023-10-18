@@ -46,6 +46,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'patch'
+
+  discord_noti:
+    needs: [tag_release]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
       - name: Test success
         uses: rjstone/discord-webhook-notify@v1
         if: ${{ success() }}
