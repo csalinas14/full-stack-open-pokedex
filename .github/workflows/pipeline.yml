@@ -54,3 +54,9 @@ jobs:
           description: to https://turtle-pokedex.onrender.com by ${{ github.actor }}
           details: Test succeeded!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Test failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ failure() }}
+        with:
+          severity: error
+          details: commit ${{ github.event.commits.*.url}} by ${{ github.actor }} broke the build
