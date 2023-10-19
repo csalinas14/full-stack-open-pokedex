@@ -2,7 +2,11 @@ name: Health Check
 
 on:
   push:
-    - testBranch
+    branches:
+      - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
 
 jobs:
   health_checker:
