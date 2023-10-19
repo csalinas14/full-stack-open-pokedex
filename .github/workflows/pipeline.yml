@@ -48,13 +48,21 @@ jobs:
           DEFAULT_BUMP: 'patch'
 
   discord_noti:
+    needs: [tag_release]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - name: Test success
         uses: rjstone/discord-webhook-notify@v1
-        if: ${{ success() }}
+        if: ${{ success() && github.event_name == 'push'}}
         with:
           severity: info
+          description: to https://turtle-pokedex.onrender.com by ${{ github.actor }}
           details: Test succeeded!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Test failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ failure() && github.event_name == 'push'}}
+        with:
+          severity: error
+          details: commit ${{ github.event.commits.*.url}} by ${{ github.actor }} broke the build
